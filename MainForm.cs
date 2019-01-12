@@ -37,8 +37,7 @@ namespace SummerGUI.Demo
 
 		/// <summary>
 		/// Load all your widgets here,
-		/// </summary>
-		/// <param name="e">Not used.</param>
+		/// </summary>		
 		public MainForm () : base("SummerGUI Demo", 800, 600)
 		{			
 			this.Title = "Summer GUI Demo - A lightweight X-Platform GUI Framework in C#";
@@ -163,6 +162,8 @@ namespace SummerGUI.Demo
 			};				
 
 			base.Controller = new DemoController (this);
+
+            // Show Diagnostics in StatusBar
 			StartDiagnostics ();
 		}
 
@@ -210,7 +211,16 @@ namespace SummerGUI.Demo
 		protected override void OnLoad (EventArgs e)
 		{			
 			base.OnLoad (e);
-		}			
-	}
+		}
+
+        protected override void Dispose(bool manual)
+        {
+            if (manual)
+            {
+                // Dispose your objects here
+            }
+            base.Dispose(manual);
+        }
+    }
 }
 
