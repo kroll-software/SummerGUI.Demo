@@ -80,7 +80,7 @@ namespace SummerGUI.Demo
 
 			m_Editor = this.TabMain.TabPages ["texteditor"].AddChild (new TextEditorEnsemble ("texteditor"));
 
-			m_GraphPlotter = this.TabMain.TabPages ["plotter"].AddChild (new PlotterContainer ("graph2d"));
+            m_GraphPlotter = this.TabMain.TabPages ["plotter"].AddChild (new PlotterContainer ("graph2d"));
 
 			// *** Charts
 
@@ -156,7 +156,8 @@ namespace SummerGUI.Demo
 						+ "SampleData/Ulysses.txt").FixPathForPlatform();					 						
 					ShowStatus (String.Format("Loading {0} into editor..", Strings.GetFilename(textEditorBook)), false);
 					System.Threading.Tasks.Task.Factory.StartNew(() => {
-						m_Editor.Text = TextFile.LoadTextFile(textEditorBook);
+                        m_Editor.Editor.RowManager.GroupParagraphs = true;  // just for the sample books
+                        m_Editor.Text = TextFile.LoadTextFile(textEditorBook);
 					}).ContinueWith(t => ShowStatus());
 				}
 			};				
