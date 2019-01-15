@@ -106,15 +106,7 @@ namespace SummerGUI.Demo
 
 			// Setup global exception handlers
 			AppDomain.CurrentDomain.UnhandledException += ExceptionUnhandled;
-			AppDomain.CurrentDomain.FirstChanceException += AppDomain_CurrentDomain_FirstChanceException;
-
-			// Setup the GUI language
-			Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-			Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
-
-			// let all new threads have the current culture
-			CultureInfo.DefaultThreadCurrentCulture = Thread.CurrentThread.CurrentCulture;
-			CultureInfo.DefaultThreadCurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+			AppDomain.CurrentDomain.FirstChanceException += AppDomain_CurrentDomain_FirstChanceException;            			
 
 			// This step is required.
 			// Since we can't make this static class inheritable,
@@ -130,9 +122,10 @@ namespace SummerGUI.Demo
 
 			InitApplication ();
 
-			// don't use SDL2
-			OpenTK.ToolkitOptions.Default.Backend = OpenTK.PlatformBackend.PreferNative;
-			OpenTK.Toolkit.Init ();
+            // >>> Bug in OpenTK: Program hangs on Exit, when using this option..
+            // don't use SDL2
+            //OpenTK.ToolkitOptions.Default.Backend = OpenTK.PlatformBackend.PreferNative;
+			//OpenTK.Toolkit.Init ();
 
 			// testing the ThemeLoader class
 			//ThemeLoader loader = new ThemeLoader (Strings.ApplicationPath (true) + "ColorTheme.config");
