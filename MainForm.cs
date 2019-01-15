@@ -31,7 +31,7 @@ namespace SummerGUI.Demo
 		public List<PerfChart> m_SensorDisplays { get; private set; }
 
 		IGuiMenuItem mnuShowPlotterData;
-
+        ConsoleOutputWidget m_ConsoleOut;
 
 		#pragma warning disable 219		// disable warnings about unused menu items
 
@@ -64,8 +64,9 @@ namespace SummerGUI.Demo
 			this.TabMain.AdTabPage ("plotter", "Plotter");
 			this.TabMain.AdTabPage ("sinus", "Sinus");
 			this.TabMain.AdTabPage ("sensors", "Sensors");
+            this.TabMain.AdTabPage("console", "Console");
 
-			m_CommonControlsSampleContainer = this.TabMain.TabPages ["common"].AddChild (new CommonControlsSampleContainer ());
+            m_CommonControlsSampleContainer = this.TabMain.TabPages ["common"].AddChild (new CommonControlsSampleContainer ());
 			this.TabMain.TabPages ["common"].ScrollBars = ScrollBars.Vertical;
 			this.TabMain.TabPages ["common"].AutoScroll = true;
 
@@ -145,7 +146,10 @@ namespace SummerGUI.Demo
 			}
 			m_SensorContainer.Rows.ForEach (row => row.SizeMode = TableSizeModes.None);
 
-			ShowStatus("Loading Contacts..", true);
+            m_ConsoleOut = new ConsoleOutputWidget("ConsoleOut");
+            this.TabMain.TabPages["console"].AddChild(m_ConsoleOut);
+
+            ShowStatus("Loading Contacts..", true);
 
 			GridView.DataGrid.DataLoaded += delegate {				
 				ShowStatus();
