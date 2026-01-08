@@ -155,13 +155,13 @@ namespace SummerGUI.Demo
 			};				
 			this.AddChild (cmdShowInfo, tableRow++, tableColumn);
 
-			cmdShowWarning = new Button ("cmdShowWarning", "Warning MessageBox", ColorContexts.Warning);
+			cmdShowWarning = new Button ("cmdShowWarning", "Warning MessageBox", (char)FontAwesomeIcons.fa_warning, ColorContexts.Warning);
 			cmdShowWarning.Click += delegate {
 				ParentWindow.ShowWarning("This is a warning.");	
 			};				
 			this.AddChild (cmdShowWarning, tableRow++, tableColumn);
 
-			cmdShowError = new Button ("cmdShowError", "Error MessageBox", ColorContexts.Danger);
+			cmdShowError = new Button ("cmdShowError", "Error MessageBox", (char)FontAwesomeIcons.fa_times_circle, ColorContexts.Danger);
 			cmdShowError.Click += delegate {
 				try {
 					throw new Exception ("This is a sample error.");
@@ -172,7 +172,7 @@ namespace SummerGUI.Demo
 			};				
 			this.AddChild (cmdShowError, tableRow++, tableColumn);
 
-			cmdShowQuestion = new Button ("cmdShowQuestion", "Question MessageBox", ColorContexts.Question);
+			cmdShowQuestion = new Button ("cmdShowQuestion", "Question MessageBox", (char)FontAwesomeIcons.fa_question_circle, ColorContexts.Question);
 			cmdShowQuestion.Click += delegate {
 				ParentWindow.ShowQuestion("This is a question. Are you sure ?");
 			};				

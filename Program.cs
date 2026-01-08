@@ -12,10 +12,7 @@ using SummerGUI;
 namespace SummerGUI.Demo
 {
     class Program
-    {
-		[DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-		private static extern bool SetDllDirectory(string path);
-
+    {		
 		public static Queue<Exception> StartupExceptions = new Queue<Exception>();
 		static void InitApplication()
 		{			
@@ -106,28 +103,11 @@ namespace SummerGUI.Demo
 
 			// Setup global exception handlers
 			AppDomain.CurrentDomain.UnhandledException += ExceptionUnhandled;
-			AppDomain.CurrentDomain.FirstChanceException += AppDomain_CurrentDomain_FirstChanceException;            			
-
-			// This step is required.
-			// Since we can't make this static class inheritable,
-			// you have to do it here, until we find a smarter solution
-			int pf = (int)Environment.OSVersion.Platform;
-			if (pf != 4 && pf != 6 && pf != 128)
-			{
-				string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-				path = Path.Combine(path, IntPtr.Size == 8 ? "x64" : "x86");
-				if (!SetDllDirectory(path))
-					throw new System.ComponentModel.Win32Exception();
-			}
+			AppDomain.CurrentDomain.FirstChanceException += AppDomain_CurrentDomain_FirstChanceException;
 
 			InitApplication ();
 
-            // >>> Bug in OpenTK: Program hangs on Exit, when using this option..
-            // don't use SDL2
-            //OpenTK.ToolkitOptions.Default.Backend = OpenTK.PlatformBackend.PreferNative;
-			//OpenTK.Toolkit.Init ();
-
-			// testing the ThemeLoader class
+            // testing the ThemeLoader class
 			//ThemeLoader loader = new ThemeLoader (Strings.ApplicationPath (true) + "ColorTheme.config");
 
 			using (MainForm wnd = new MainForm ()) {
@@ -137,7 +117,7 @@ namespace SummerGUI.Demo
 				// You can call another overload to set these explicitly
 				wnd.Run ();
 			}
-        }			
+        }
 
 		static void ExceptionUnhandled(object sender, UnhandledExceptionEventArgs args)
 		{

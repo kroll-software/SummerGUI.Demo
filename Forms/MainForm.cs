@@ -4,6 +4,9 @@ using System.Drawing;
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework; 
 using KS.Foundation;
 using SummerGUI;
 using SummerGUI.Scheduling;
@@ -40,17 +43,18 @@ namespace SummerGUI.Demo
 		/// </summary>		
 		public MainForm () : base("SummerGUI Demo", 800, 600)
 		{			
-			this.Title = "Summer GUI Demo - A lightweight X-Platform GUI Framework in C#";
+			this.Title = "Summer GUI Demo - A lightweight X-Platform GUI Framework in C#";			
 
 			// some more custom menu items
 
 			var mnuView = MainMenu.FindItem ("View");
 
 			mnuShowPlotterData = mnuView.InsertChild (2, "ShowPlotterData", "Plotter Data Table", (char)FontAwesomeIcons.fa_columns)
-				.SetChecked (true).SetHotKey(Key.F8);
+				.SetChecked (true).SetHotKey(Keys.F8);
+						
 			mnuShowPlotterData.CheckedChanged += delegate {
 				m_GraphPlotter.Panel2Collapsed = !mnuShowPlotterData.Checked;
-			};
+			};			
 
 			mnuView.InsertSeparator (3);
 
@@ -84,7 +88,7 @@ namespace SummerGUI.Demo
             m_GraphPlotter = this.TabMain.TabPages ["plotter"].AddChild (new PlotterContainer ("graph2d"));
 
 			// *** Charts
-
+			
 			// Single PerfChart "Sinus"
 			m_SinusChart = this.TabMain.TabPages ["sinus"].AddChild (new PerfChart ("SinusChart"));
 			m_SinusChart.Caption = "f(x) = sin(x)";
@@ -179,17 +183,17 @@ namespace SummerGUI.Demo
 		}
 
 		public override void OnLoadSettings ()
-		{
+		{			
 			base.OnLoadSettings ();
 
-			if (WindowState != WindowState.Minimized) {
+			if (WindowState != WindowState.Minimized) {				
 				ConfigurationService.Instance.ConfigFile.Do (cfg => {					
 					m_GraphPlotter.Panel2Collapsed = cfg.GetSetting(Name, "GraphPlotter.Panel2Collapsed", m_GraphPlotter.Panel2Collapsed).SafeBool();
 					m_GraphPlotter.Splitter.Distance = cfg.GetSetting(Name, "GraphPlotter.Splitter", m_GraphPlotter.Splitter.Distance).SafeFloat();
 				});
+				mnuShowPlotterData.Checked = !m_GraphPlotter.Panel2Collapsed;			
 
-				m_Schedule.LoadSettings (Name);
-				mnuShowPlotterData.Checked = !m_GraphPlotter.Panel2Collapsed;
+				m_Schedule.LoadSettings (Name);				
 			}
 		}
 
@@ -197,11 +201,11 @@ namespace SummerGUI.Demo
 		{
 			base.OnSaveSettings ();
 
-			if (WindowState != WindowState.Minimized) {
+			if (WindowState != WindowState.Minimized) {				
 				ConfigurationService.Instance.ConfigFile.Do (cfg => {										
 					cfg.SetSetting (Name, "GraphPlotter.Panel2Collapsed", m_GraphPlotter.Panel2Collapsed.ToLowerString());
 					cfg.SetSetting (Name, "GraphPlotter.Splitter", m_GraphPlotter.Splitter.Distance / ScaleFactor);
-				});
+				});				
 
 				m_Schedule.SaveSettings(Name);
 			}
@@ -224,6 +228,7 @@ namespace SummerGUI.Demo
             {
                 // Dispose your objects here
             }
+			GC.SuppressFinalize(this);
             base.Dispose(manual);
         }
     }

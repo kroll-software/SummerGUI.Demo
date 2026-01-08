@@ -8,6 +8,8 @@ using OpenTK.Input;
 using KS.Foundation;
 using SummerGUI;
 using SummerGUI.DataGrid;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework; 
 
 namespace SummerGUI.Demo
 {
@@ -37,7 +39,7 @@ namespace SummerGUI.Demo
 		{
 			// We just need the AlphaNumeric glyphs from this font.
 			// We're safe and add the OnDemand option, which allows later loading on demand.
-			FontManager.GetConfig (CommonFontTags.Small).OnDemand = true;
+			FontManager.Manager.GetConfig (CommonFontTags.Small).OnDemand = true;
 			base.OnInitFonts ();
 		}
 
@@ -159,13 +161,13 @@ namespace SummerGUI.Demo
 				Table.Columns [1].Width = ((this.Width - Table.Padding.Width) / 2) - zipWidth - (Table.CellPadding.Width * 2);
 			}
 		}
-			
-		protected override void OnResize (EventArgs e)
-		{			
+
+        protected override void OnResize(ResizeEventArgs e)
+        {
 			LayoutDirtyFlag = true;
-			base.OnResize (e);
+            base.OnResize(e);
 			Invalidate ();
-		}
+        }		
 
 		protected virtual void GetData()
 		{
@@ -203,10 +205,10 @@ namespace SummerGUI.Demo
 		protected override void OnKeyDown (KeyboardKeyEventArgs e)
 		{
 			switch (e.Key) {
-			case Key.Escape:
+			case Keys.Escape:
 				OnCancel ();
 				return;
-			case Key.Enter:
+			case Keys.Enter:
 				if (ButtonContainer.OnKeyDown (e))
 					return;
 				//else
