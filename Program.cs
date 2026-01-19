@@ -102,8 +102,9 @@ namespace SummerGUI.Demo
 			Logging.SetupLogging (LogLevels.Verbose, LogTargets.Console);
 
 			// Setup global exception handlers
+			AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
 			AppDomain.CurrentDomain.UnhandledException += ExceptionUnhandled;
-			AppDomain.CurrentDomain.FirstChanceException += AppDomain_CurrentDomain_FirstChanceException;
+			AppDomain.CurrentDomain.FirstChanceException += AppDomain_CurrentDomain_FirstChanceException;			
 
 			InitApplication ();
 
@@ -118,6 +119,11 @@ namespace SummerGUI.Demo
 				wnd.Run ();
 			}
         }
+
+		static void OnProcessExit(object sender, EventArgs e)
+		{
+			// empty
+		}
 
 		static void ExceptionUnhandled(object sender, UnhandledExceptionEventArgs args)
 		{

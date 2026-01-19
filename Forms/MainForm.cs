@@ -109,8 +109,8 @@ namespace SummerGUI.Demo
 			// Array of PerfCharts
 			m_SensorContainer = this.TabMain.TabPages ["sensors"].AddChild (new TableLayoutContainer ("sensors"));
 			m_SensorContainer.Padding = new Padding (2f);
-			m_SensorContainer.CellPadding = new SizeF(1.5f, 1.5f);
-			m_SensorContainer.Style.BackColorBrush.Color = Theme.Colors.Base01;
+			m_SensorContainer.CellPadding = new SizeF(1.5f, 1.5f);			
+			//m_SensorContainer.BackColor = Theme.Colors.Base01;
 
 			//int maxSensors = 49;
 			//int sensorColumns = 7;
@@ -131,6 +131,7 @@ namespace SummerGUI.Demo
 
 				display.DemoSpeed = (decimal)(ThreadSafeRandom.NextDouble () * 0.5);
 				display.GridSpacing = 16;
+				display.BackColor = Color.Red;
 
 				if (ThreadSafeRandom.NextBool()) {
 					display.FlowDirection = PerfChart.FlowDirections.LeftToRight;
