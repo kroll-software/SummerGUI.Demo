@@ -26,7 +26,7 @@ namespace SummerGUI.Demo
 				int rowIndex = DataProvider.RowManager.CurrentRowIndex;
 				Contact contact = DataProvider.Contacts[rowIndex];
 				ContactForm Dlg = new ContactForm(Context, contact);
-				Dlg.Show(Context);
+				Dlg.ShowDialog(Context);
 				Dlg.Dispose();
 				Context.MakeCurrent();	// set the OpenGL Context to the active window
 				grid.Focus();
@@ -34,7 +34,7 @@ namespace SummerGUI.Demo
 				
 			Context.GridView.Tools.CmdNew.Click += delegate {	
 				ContactForm Dlg = new ContactForm(Context, null);
-				Dlg.Show(Context);
+				Dlg.ShowDialog(Context);
 				if (Dlg.Result == DialogResults.OK) {
 					DataProvider.AddContact(Dlg.Contact);
 				}
