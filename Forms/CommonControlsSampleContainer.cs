@@ -174,7 +174,7 @@ namespace SummerGUI.Demo
 
 			cmdShowQuestion = new Button ("cmdShowQuestion", "Question MessageBox", (char)FontAwesomeIcons.fa_question_circle, ColorContexts.Question);
 			cmdShowQuestion.Click += delegate {
-				ParentWindow.ShowQuestion("This is a question. Are you sure ?");
+				ParentWindow.ShowQuestion("This is a question. Are you sure?");
 			};				
 			this.AddChild (cmdShowQuestion, tableRow++, tableColumn);
 

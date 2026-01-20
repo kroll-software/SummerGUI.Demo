@@ -83,7 +83,40 @@ namespace SummerGUI.Demo
 			MainMenu.Insert (MainMenu.IndexOf (mnuExtras), m_Schedule.Menu);
 
 
-			m_Editor = this.TabMain.TabPages ["texteditor"].AddChild (new TextEditorEnsemble ("texteditor"));
+			m_Editor = this.TabMain.TabPages ["texteditor"].AddChild (new TextEditorEnsemble ("texteditor"));			
+
+			IGuiMenuItem mnuNew = this.MenuPanel.MainMenu.FindItem("New");
+            mnuNew.Click += (object sender, EventArgs e) =>
+            {
+                m_Editor.Text = null;
+				m_Editor.Editor.RowManager.GroupParagraphs = false;  // Default mode
+				TabMain.SelectedTab = TabMain.TabPages ["texteditor"];
+				m_Editor.Focus();
+            };
+
+            IGuiMenuItem mnuOpen = this.MenuPanel.MainMenu.FindItem("Open");
+            mnuOpen.Click += (object sender, EventArgs e) => {                
+                OpenFileDialog dlg = new OpenFileDialog();
+                var result = dlg.ShowDialog(this, "Open File", "Text files (*.txt)|*.txt|All files (*.*)|*.*");                
+                if (result == DialogResult.OK && Strings.FileExists(dlg.FileName))
+                {
+                    ShowStatus(String.Format("Loading {0}..", Strings.GetFilename(dlg.FileName)), true);
+                    Task.Run(() =>
+                    {
+						m_Editor.Editor.RowManager.GroupParagraphs = false;  // Default mode
+                        m_Editor.FilePath = dlg.FileName;
+                        m_Editor.Text = TextFile.LoadTextFile(dlg.FileName);
+						m_Editor.Focus();
+                    });
+
+					TabMain.SelectedTab = TabMain.TabPages ["texteditor"];
+                }
+            };
+
+            m_Editor.Editor.RowManager.LoadingCompleted += (sender, e) =>
+            {
+                ShowStatus();
+            };
 
             m_GraphPlotter = this.TabMain.TabPages ["plotter"].AddChild (new PlotterContainer ("graph2d"));
 
