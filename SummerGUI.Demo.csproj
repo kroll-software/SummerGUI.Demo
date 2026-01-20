@@ -37,7 +37,6 @@
   <ItemGroup>
     <!-- Automatische Code-Einbindung -->            
     <None Include="LICENSE" />
-    <None Include="README" />
     <None Include="SampleData\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
