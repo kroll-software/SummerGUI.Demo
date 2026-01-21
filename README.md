@@ -37,6 +37,9 @@ If you want to compile and run the project on Windows, you need to adjust the Ta
 This demo relies on the **SummerGUI Core Framework**. You can find the source code, documentation, and the rendering engine here:
 
 [👉 SummerGUI Main Repository](https://github.com/kroll-software/SummerGUI)  
+
+### Dependencies
+
 [👉 SummerGUI.Scheduling](https://github.com/kroll-software/SummerGUI.Scheduling)  
 [👉 SummerGUI.Charting](https://github.com/kroll-software/SummerGUI.Charting)  
 [👉 KS.Foundation](https://github.com/kroll-software/KS.Foundation)  
