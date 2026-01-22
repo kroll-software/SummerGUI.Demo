@@ -75,6 +75,7 @@ namespace SummerGUI.Demo
 			this.TabMain.TabPages ["common"].AutoScroll = true;
 
 			GridView = this.TabMain.TabPages ["datagrid"].AddChild (new DataGridEnsemble ("samplegrid"));
+			GridView.DataGrid.AllowSort = true;
 
 			m_Schedule = this.TabMain.TabPages ["schedule"].AddChild (new DayViewEnsamble ("sampleschedule"));
 
