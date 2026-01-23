@@ -81,7 +81,7 @@ namespace SummerGUI.Demo
 			// set the generic comparer to out data-list, so that it can be sorted 
 			// by the user, by clicking on a column-header
 
-			var GenericComparer = new GenericSortComparer<Contact> (this.ColumnManager.Columns.ToArray(), "ID");
+			var GenericComparer = new GenericSortComparer<Contact> (this.ColumnManager.Columns.ToArray(), "DisplayName");
 			
 			m_Contacts = new BalancedOrderStatisticTree<Contact>(GenericComparer);
 
