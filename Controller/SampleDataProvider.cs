@@ -43,26 +43,6 @@ namespace SummerGUI.Demo
 		}
 	}
 
-	public class WrappedContactComparer : WrappedComparer<Contact>
-	{
-		public WrappedContactComparer(IComparer<Contact> userComparer) : base(userComparer) {}
-
-		public override int Compare (Contact x, Contact y)
-		{
-			int result = base.Compare (x, y);
-			if (result != 0)
-				return result;
-
-			if (x == null || y == null)
-				return 0;
-
-			// *** the purpose of this wrapped comparer is to always have a default 
-			// sort order for our contacts, when no other sorting is applied
-			return x.ID.CompareTo(y.ID);
-		}
-	}
-
-
 	public class SampleDataProvider : DataProvider
 	{
 
@@ -73,10 +53,7 @@ namespace SummerGUI.Demo
 				return m_Contacts;
 			}
 		}
-
-		public GenericSortComparer<Contact> GenericComparer { get; private set; } 
-		public WrappedContactComparer ContactComparer { get; private set; } 
-
+		
 		public SampleDataProvider (IController parent, IDataProviderOwner owner)
 			: base(parent, owner)
 		{			
@@ -104,12 +81,9 @@ namespace SummerGUI.Demo
 			// set the generic comparer to out data-list, so that it can be sorted 
 			// by the user, by clicking on a column-header
 
-			GenericComparer = new GenericSortComparer<Contact> (this.ColumnManager.Columns.ToArray());
-			ContactComparer = new WrappedContactComparer (GenericComparer);
-
-			// the main data collection of this data-provider
-
-			m_Contacts = new BalancedOrderStatisticTree<Contact>(ContactComparer);
+			var GenericComparer = new GenericSortComparer<Contact> (this.ColumnManager.Columns.ToArray(), "ID");
+			
+			m_Contacts = new BalancedOrderStatisticTree<Contact>(GenericComparer);
 
 			// *** Open CSV file..
 
