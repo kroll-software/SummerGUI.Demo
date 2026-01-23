@@ -58,7 +58,7 @@ namespace SummerGUI.Demo
 
 			// *** the purpose of this wrapped comparer is to always have a default 
 			// sort order for our contacts, when no other sorting is applied
-			return x.DisplayName.CompareTo(y.DisplayName);
+			return x.ID.CompareTo(y.ID);
 		}
 	}
 
@@ -214,26 +214,26 @@ namespace SummerGUI.Demo
 			}
 		}
 
-		public override void ApplySort ()
-		{		
-			CancelSort ();
-			TokenSource = new CancellationTokenSource ();
-			Root.SendMessage (this, "ShowStatus", false, "Sorting Contacts..", true); 
+		public override async Task ApplySort()
+		{
+			CancelSort();
+			TokenSource = new CancellationTokenSource();
+			Root.SendMessage(this, "ShowStatus", false, "Sorting Contacts..", true);
 
 			try {
-				Task<BalancedOrderStatisticTree<Contact>>.Factory.StartNew(() => 					
-					new BalancedOrderStatisticTree<Contact>(Contacts, Contacts.Comparer)
-				, TokenSource.Token, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default)
-					.ContinueWith((t) => {						
-						if (t.Status == TaskStatus.RanToCompletion && t.Result != null) {
-							Concurrency.LockFreeUpdate(ref m_Contacts, t.Result);
-						}
-						Root.SendMessage (this, "ClearStatus");
-					});
+				var token = TokenSource.Token;
+				var tree = await Task.Run(() =>
+					new BalancedOrderStatisticTree<Contact>(Contacts, Contacts.Comparer), token);
 
+				if (tree != null) {
+					Concurrency.LockFreeUpdate(ref m_Contacts, tree);
+				}
+			} catch (OperationCanceledException) {
+				// Sort wurde abgebrochen — optional behandeln
 			} catch (Exception ex) {
-				ex.LogWarning ();
-				Root.SendMessage (this, "ClearStatus");
+				ex.LogWarning();
+			} finally {
+				Root.SendMessage(this, "ClearStatus");
 			}
 		}
 
