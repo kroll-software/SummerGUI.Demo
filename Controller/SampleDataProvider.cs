@@ -143,32 +143,36 @@ namespace SummerGUI.Demo
 			}
 		}
 
-		public override string GetValue (int row, int col)
+		public override object GetValue (int row, int col)
 		{
+			if (row < 0 || row > Contacts.Count -1)
+				return null;
+			var contact = Contacts [row];
+
 			switch (col) {
 			case 0:
-				return Contacts [row].ID.ToString ("n0");
+				return contact.ID;
 			case 1:
-				return Contacts [row].FirstName;
+				return contact.FirstName;
 			case 2:
-				return Contacts [row].LastName;
+				return contact.LastName;
 			case 3:
-				return Contacts [row].Company;
+				return contact.Company;
 			case 4:
-				return Contacts [row].Zip;
+				return contact.Zip;
 			case 5:
-				return Contacts [row].City;
+				return contact.City;
 			case 6:
-				return Contacts [row].Address;
+				return contact.Address;
 			case 7:
-				return Contacts [row].Phone;
+				return contact.Phone;
 			case 8:
-				return Contacts [row].Email;
+				return contact.Email;
 			case 9:
-				return Contacts [row].Web;
+				return contact.Web;
+			default:
+				return null;
 			}
-
-			return string.Empty;
 		}
 
 
@@ -188,26 +192,26 @@ namespace SummerGUI.Demo
 			}
 		}
 
-		public override async Task ApplySort()
+		public override void ApplySort()
 		{
 			CancelSort();
 			TokenSource = new CancellationTokenSource();
 			Root.SendMessage(this, "ShowStatus", false, "Sorting Contacts..", true);
 
 			try {
-				var token = TokenSource.Token;
-				var tree = await Task.Run(() =>
-					new BalancedOrderStatisticTree<Contact>(Contacts, Contacts.Comparer), token);
+				Task<BalancedOrderStatisticTree<Contact>>.Factory.StartNew(() => 					
+					new BalancedOrderStatisticTree<Contact>(Contacts, Contacts.Comparer)
+				, TokenSource.Token, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default)
+					.ContinueWith((t) => {						
+						if (t.Status == TaskStatus.RanToCompletion && t.Result != null) {
+							Concurrency.LockFreeUpdate(ref m_Contacts, t.Result);
+						}
+						Root.SendMessage (this, "ClearStatus");
+					});
 
-				if (tree != null) {
-					Concurrency.LockFreeUpdate(ref m_Contacts, tree);
-				}
-			} catch (OperationCanceledException) {
-				// Sort wurde abgebrochen — optional behandeln
 			} catch (Exception ex) {
-				ex.LogWarning();
-			} finally {
-				Root.SendMessage(this, "ClearStatus");
+				ex.LogWarning ();
+				Root.SendMessage (this, "ClearStatus");			
 			}
 		}
 
