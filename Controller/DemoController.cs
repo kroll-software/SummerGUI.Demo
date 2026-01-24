@@ -19,7 +19,7 @@ namespace SummerGUI.Demo
 
 			DataProvider.InitializeColumns ();
 			grid.SetDataProvider (DataProvider);
-			Context.GridView.Tools.SetRowManager (DataProvider.RowManager);
+			Context.GridView.ToolBar.SetRowManager (DataProvider.RowManager);
 
 			/**** ***/
 			grid.ItemSelected += delegate {
@@ -32,7 +32,7 @@ namespace SummerGUI.Demo
 				grid.Focus();
 			};
 				
-			Context.GridView.Tools.CmdNew.Click += delegate {	
+			Context.GridView.ToolBar.CmdNew.Click += delegate {	
 				ContactForm Dlg = new ContactForm(Context, null);
 				Dlg.ShowDialog(Context);
 				if (Dlg.Result == DialogResults.OK) {
@@ -59,7 +59,7 @@ namespace SummerGUI.Demo
 		{
 			int i = 0;
 			while (i++ < 1000) {
-				Context.GridView.Tools.CmdEdit.OnClick ();
+				Context.GridView.ToolBar.CmdEdit.OnClick ();
 
 				if (DlgTest != null) {				
 					DlgTest.Dispose ();
