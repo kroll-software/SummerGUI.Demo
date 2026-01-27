@@ -1,0 +1,50 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // --- LINUX ---
+    {
+      "name": "Linux (Debug)",
+      "type": "coreclr", "request": "launch",
+      "preLaunchTask": "Build Debug Linux",
+      "program": "${workspaceFolder}/bin/Debug/net8.0/linux-x64/SummerGUI.Demo.dll",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Linux (Release)",
+      "type": "coreclr", "request": "launch",
+      "preLaunchTask": "Build Release Linux",
+      "program": "${workspaceFolder}/bin/Release/net8.0/linux-x64/SummerGUI.Demo.dll",
+      "cwd": "${workspaceFolder}"
+    },
+    // --- WINDOWS ---
+    {
+      "name": "Windows (Debug)",
+      "type": "coreclr", "request": "launch",
+      "preLaunchTask": "Build Debug Windows",
+      "program": "${workspaceFolder}/bin/Debug/net8.0/win-x64/SummerGUI.Demo.dll",
+      "cwd": "${workspaceFolder}"      
+    },
+    {
+      "name": "Windows (Release)",
+      "type": "coreclr", "request": "launch",
+      "preLaunchTask": "Build Release Windows",
+      "program": "${workspaceFolder}/bin/Release/net8.0/SummerGUI.Demo.dll",
+      "cwd": "${workspaceFolder}",      
+    }
+    // --- MAC ---
+    {
+      "name": "Mac (Debug)",
+      "type": "coreclr", "request": "launch",
+      "preLaunchTask": "Build Debug Mac",
+      "program": "${workspaceFolder}/bin/Debug/net8.0/osx-arm64/SummerGUI.Demo.dll",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Mac (Release)",
+      "type": "coreclr", "request": "launch",
+      "preLaunchTask": "Build Release Mac",
+      "program": "${workspaceFolder}/bin/Release/net8.0/osx-arm64/SummerGUI.Demo.dll",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
