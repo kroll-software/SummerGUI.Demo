@@ -21,8 +21,7 @@ namespace SummerGUI.Demo
 		public ButtonContainer ButtonContainer { get; private set; }
 
 		public ContactForm (SummerGUIWindow parent, Contact contact)
-			: base ("ContactForm", contact == null ? "New Contact" : "Edit Contact", 
-			       (520 * parent.ScaleFactor).Ceil (), (364 * parent.ScaleFactor).Ceil (), parent, true)
+			: base ("ContactForm", contact == null ? "New Contact" : "Edit Contact", 520, 364, parent, true)
 		{
 			Notifications = AddChild (new NotificationPanel ("notifications"));
 			Contact = contact;
