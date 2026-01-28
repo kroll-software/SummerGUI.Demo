@@ -3,9 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
 
-    <OutputType>Exe</OutputType>
-    <UseAppHost>true</UseAppHost>
-    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <OutputType>WinExe</OutputType>
+    <UseAppHost>true</UseAppHost>    
 
     <RootNamespace>SummerGUI.Demo</RootNamespace>
     <AssemblyName>SummerGUI.Demo</AssemblyName>
