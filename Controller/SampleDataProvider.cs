@@ -148,6 +148,8 @@ namespace SummerGUI.Demo
 			if (row < 0 || row > Contacts.Count -1)
 				return null;
 			var contact = Contacts [row];
+			if (contact == null)
+				return null;
 
 			switch (col) {
 			case 0:
