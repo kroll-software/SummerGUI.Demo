@@ -46,8 +46,8 @@ namespace SummerGUI.Demo
 	public class SampleDataProvider : DataProvider
 	{
 
-		BalancedOrderStatisticTree<Contact> m_Contacts;
-		public BalancedOrderStatisticTree<Contact> Contacts 
+		BinarySortedList<Contact> m_Contacts;
+		public BinarySortedList<Contact> Contacts 
 		{ 
 			get {
 				return m_Contacts;
@@ -83,7 +83,7 @@ namespace SummerGUI.Demo
 
 			var GenericComparer = new GenericSortComparer<Contact> (this.ColumnManager.Columns.ToArray(), "DisplayName");
 			
-			m_Contacts = new BalancedOrderStatisticTree<Contact>(GenericComparer);
+			m_Contacts = new BinarySortedList<Contact>(GenericComparer);
 
 			// *** Open CSV file..
 
@@ -199,22 +199,8 @@ namespace SummerGUI.Demo
 			CancelSort();
 			TokenSource = new CancellationTokenSource();
 			Root.SendMessage(this, "ShowStatus", false, "Sorting Contacts..", true);
-
-			try {
-				Task<BalancedOrderStatisticTree<Contact>>.Factory.StartNew(() => 					
-					new BalancedOrderStatisticTree<Contact>(Contacts, Contacts.Comparer)
-				, TokenSource.Token, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default)
-					.ContinueWith((t) => {						
-						if (t.Status == TaskStatus.RanToCompletion && t.Result != null) {
-							Concurrency.LockFreeUpdate(ref m_Contacts, t.Result);
-						}
-						Root.SendMessage (this, "ClearStatus");
-					});
-
-			} catch (Exception ex) {
-				ex.LogWarning ();
-				Root.SendMessage (this, "ClearStatus");			
-			}
+			Contacts.NaturalMergeSort();
+			Root.SendMessage (this, "ClearStatus");			
 		}
 
 		protected override void CleanupManagedResources ()

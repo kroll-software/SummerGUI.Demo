@@ -1,5 +1,5 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SummerGUI.Demo", "SummerGUI.Demo.csproj", "{DF283CEF-97A7-46D5-AC70-A04D63F2129C}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Foundation", "..\KS.Foun
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SummerGUI.Scheduling", "..\SummerGUI.Scheduling\SummerGUI.Scheduling.csproj", "{FAC820E4-50EE-480A-9D99-7DD7246DBC3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SummerGUI.Charting", "..\SummerGUI.Charting\SummerGUI.Charting.csproj", "{315CB2D8-49B9-4F1D-8E28-FFB57CFB1EA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SummerGUI.Charting", "..\SummerGUI.Charting\SummerGUI.Charting.csproj", "{9019B629-9A83-460C-BDB9-EB971E65AD77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +33,12 @@ Global
 		{FAC820E4-50EE-480A-9D99-7DD7246DBC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAC820E4-50EE-480A-9D99-7DD7246DBC3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAC820E4-50EE-480A-9D99-7DD7246DBC3F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{315CB2D8-49B9-4F1D-8E28-FFB57CFB1EA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{315CB2D8-49B9-4F1D-8E28-FFB57CFB1EA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{315CB2D8-49B9-4F1D-8E28-FFB57CFB1EA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{315CB2D8-49B9-4F1D-8E28-FFB57CFB1EA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9019B629-9A83-460C-BDB9-EB971E65AD77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9019B629-9A83-460C-BDB9-EB971E65AD77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9019B629-9A83-460C-BDB9-EB971E65AD77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9019B629-9A83-460C-BDB9-EB971E65AD77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
