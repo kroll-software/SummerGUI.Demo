@@ -40,6 +40,11 @@ namespace SummerGUI.Demo
 		ComboListBox m_ComboListBox1;
 		ComboBox m_ComboBox1;
 
+		TableLayoutContainer m_ListboxSubContainer;
+
+		ListBox m_ListBox1;
+		CheckedListBox m_CheckedListBox1;
+
 		public CommonControlsSampleContainer ()
 			: base("CommonControlsSampleContainer")
 		{
@@ -47,7 +52,7 @@ namespace SummerGUI.Demo
 			CellPadding = new SizeF (16, 16);
 			InitControls ();
 			CollapsibleColumnsWidth = 420;
-		}			
+		}
 			
 		private void InitControls()
 		{	
@@ -135,7 +140,7 @@ namespace SummerGUI.Demo
 			m_CircleSlider2.Tooltip = "Drag up and down\nto change the value.";
 			m_CircleSliderSubContainer.AddChild (m_CircleSlider2, 0, 1);
 
-			this.AddChild(m_CircleSliderSubContainer, tableRow++, tableColumn);
+			this.AddChild(m_CircleSliderSubContainer, tableRow++, tableColumn, 2, 1);			
 
 
 			// >>> New Column >>>
@@ -215,6 +220,38 @@ namespace SummerGUI.Demo
 			m_ComboBox1.Items.Add ("Pineapple", 5);
 			m_ComboBox1.SelectedIndex = 0;
 			this.AddChild (m_ComboBox1, tableRow++, tableColumn);
+
+
+			m_ListboxSubContainer = new TableLayoutContainer ("m_ListboxSubContainer");
+			m_ListboxSubContainer.Margin = new Padding (0, 6, 0, 16);
+
+			m_ListBox1 = new ListBox("ListBox1");
+			m_ListBox1.MinSize = new SizeF(120, 160);
+			m_ListBox1.MaxSize = new SizeF(120, 160);
+
+			for (int i = 1; i < 13; i++)
+			{
+				m_ListBox1.Items.AddUnsorted("Item " + i.ToString(), i);
+			}
+			m_ListBox1.SelectedIndex = 0;
+			m_ListboxSubContainer.AddChild (m_ListBox1, 0, 0);
+
+			m_CheckedListBox1 = new CheckedListBox("CheckedListBox1");
+			m_CheckedListBox1.MinSize = new SizeF(120, 160);
+			m_CheckedListBox1.MaxSize = new SizeF(120, 160);
+			
+			for (int i = 1; i < 13; i++)
+			{
+				m_CheckedListBox1.Items.AddUnsorted("Item " + i.ToString(), i);
+			}
+			m_CheckedListBox1.SelectedIndex = 0;
+			m_CheckedListBox1.Items[2].Checked = true;
+			m_CheckedListBox1.Margin = new Padding(8, 0, 0, 0);
+			m_ListboxSubContainer.AddChild (m_CheckedListBox1, 0, 1);
+
+			m_ListboxSubContainer.Columns[0].SizeMode = TableSizeModes.Content;			
+
+			this.AddChild(m_ListboxSubContainer, tableRow++, tableColumn);
 		}
 	}
 }
