@@ -143,7 +143,7 @@ namespace SummerGUI.Demo
 			}
 		}
 
-		public override object GetValue (int row, int col)
+		public override object GetValue (int row, string key)
 		{
 			if (row < 0 || row > Contacts.Count -1)
 				return null;
@@ -151,26 +151,26 @@ namespace SummerGUI.Demo
 			if (contact == null)
 				return null;
 
-			switch (col) {
-			case 0:
+			switch (key) {
+			case "ID":
 				return contact.ID;
-			case 1:
+			case "FirstName":
 				return contact.FirstName;
-			case 2:
+			case "LastName":
 				return contact.LastName;
-			case 3:
+			case "Company":
 				return contact.Company;
-			case 4:
+			case "Zip":
 				return contact.Zip;
-			case 5:
+			case "City":
 				return contact.City;
-			case 6:
+			case "Address":
 				return contact.Address;
-			case 7:
+			case "Phone":
 				return contact.Phone;
-			case 8:
+			case "Email":
 				return contact.Email;
-			case 9:
+			case "Web":
 				return contact.Web;
 			default:
 				return null;
