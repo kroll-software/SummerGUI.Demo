@@ -183,9 +183,9 @@ namespace SummerGUI.Demo
 			};				
 			this.AddChild (cmdShowQuestion, tableRow++, tableColumn);
 
-			m_TextBox1 = new TextBox ("TextBox1");
+			m_TextBox1 = new TextBox ("TextBox1");			
 			m_TextBox1.Text = "Abcd Efg Hijk";
-			this.AddChild (m_TextBox1, tableRow++, tableColumn);
+			this.AddChild (m_TextBox1, tableRow++, tableColumn);			
 
 			m_ShowPasswordChar = new CheckBox ("ShowPasswordChar", "Password visible");
 			m_ShowPasswordChar.Checked = true;
@@ -253,6 +253,11 @@ namespace SummerGUI.Demo
 
 			this.AddChild(m_ListboxSubContainer, tableRow++, tableColumn);
 		}
+
+        public override void OnLayout(IGUIContext ctx, RectangleF bounds)
+        {
+            base.OnLayout(ctx, bounds);
+        }
 	}
 }
 

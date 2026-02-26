@@ -63,13 +63,13 @@ namespace SummerGUI.Demo
 			btnOK.MinSize = new SizeF(96, 0);
 			btnOK.Click += (sender, eOK) => OnOK();
 			btnOK.MakeDefaultButton ();	// handle Enter-Key even when not focused
-			btnOK.Update ();			
+			btnOK.Update ();
 
 			//DefaultButton btnCancel = ButtonContainer.AddChild (new DefaultButton ("cancelbutton", "&Cancel"));
 			DefaultButton btnCancel = ButtonContainer.AddChild (new DefaultButton ("cancelbutton", "&Cancel"));
 			btnCancel.MinSize = new SizeF(96, 0);
 			btnCancel.Click += (sender, eCancel) => OnCancel();
-			btnCancel.Update ();			
+			btnCancel.Update ();
 
 			//btnOK.Selected = true;	// make this the default button.
 		}

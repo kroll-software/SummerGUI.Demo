@@ -71,8 +71,8 @@ namespace SummerGUI.Demo
             this.TabMain.AdTabPage("console", "Console");
 
             m_CommonControlsSampleContainer = this.TabMain.TabPages ["common"].AddChild (new CommonControlsSampleContainer ());
-			this.TabMain.TabPages ["common"].ScrollBars = ScrollBars.Vertical;
-			this.TabMain.TabPages ["common"].AutoScroll = true;
+			this.TabMain.TabPages ["common"].ScrollBars = ScrollBars.Vertical;			
+			this.TabMain.TabPages ["common"].AutoScroll = true;			
 
 			GridView = this.TabMain.TabPages ["datagrid"].AddChild (new DataGridEnsemble ("samplegrid"));
 			GridView.DataGrid.AllowSort = true;
@@ -83,7 +83,6 @@ namespace SummerGUI.Demo
 			var mnuExtras = MainMenu.FindItem ("Extras");
 			MainMenu.Insert (MainMenu.IndexOf (mnuExtras), m_Schedule.Menu);
 
-
 			m_Editor = this.TabMain.TabPages ["texteditor"].AddChild (new TextEditorEnsemble ("texteditor"));			
 
 			IGuiMenuItem mnuNew = this.MenuPanel.MainMenu.FindItem("New");
@@ -93,7 +92,7 @@ namespace SummerGUI.Demo
 				m_Editor.Editor.RowManager.GroupParagraphs = false;  // Default mode
 				TabMain.SelectedTab = TabMain.TabPages ["texteditor"];
 				m_Editor.Focus();
-            };
+            };			
 
             IGuiMenuItem mnuOpen = this.MenuPanel.MainMenu.FindItem("Open");
             mnuOpen.Click += (object sender, EventArgs e) => {                
@@ -112,7 +111,7 @@ namespace SummerGUI.Demo
 
 					TabMain.SelectedTab = TabMain.TabPages ["texteditor"];
                 }
-            };
+            };			
 
             m_Editor.Editor.RowManager.LoadingCompleted += (sender, e) =>
             {
