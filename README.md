@@ -1,6 +1,8 @@
 # SummerGUI Demo 🚀
 Welcome to the official demonstration project for the **SummerGUI X-Platform Framework**. This project is designed to showcase the power, speed, and modern rendering capabilities of SummerGUI in a real-world application context.
 
+![Screenshot](Screenshots/SummerGUI-Screenshot.png)
+
 ## What is SummerGUI?
 SummerGUI is a high-performance, cross-platform UI framework for .NET 8. It moves away from legacy OpenGL to a modern **Core Profile** architecture using **Vertex Buffer Objects (VBOs)** and professional text shaping via **HarfBuzz**.
 
