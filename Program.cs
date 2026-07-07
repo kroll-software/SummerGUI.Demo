@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Globalization;
+using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using KS.Foundation;
 using SummerGUI;
 
@@ -107,6 +109,31 @@ namespace SummerGUI.Demo
 			AppDomain.CurrentDomain.FirstChanceException += AppDomain_CurrentDomain_FirstChanceException;			
 
 			InitApplication ();
+			
+			GLFWProvider.SetErrorCallback((errorCode, description) =>
+			{
+				// Wir prüfen primär auf die Beschreibung oder den spezifischen Feature-Fehler
+				if (description != null && description.Contains("opacity", StringComparison.OrdinalIgnoreCase))
+				{
+					// Safe-Guard: Unter Wayland einfach ignorieren und weiterlaufen lassen
+					System.Diagnostics.Debug.WriteLine($"[SummerGUI Wayland Note] {description}");
+					return; 
+				}
+
+				// Alternativ-Check über den Namen des ErrorCodes, falls die Beschreibung variiert
+				if (errorCode.ToString().Contains("FeatureUnavailable"))
+				{
+					return;
+				}
+
+				if (errorCode.ToString().Contains("PlatformUnavailable"))
+				{
+					return;
+				}				
+
+				// Alles andere bleibt ein harter Crash für die Entwicklung
+				throw new GLFWException($"GLFW Error {errorCode}: {description}");
+			});			
 
             // testing the ThemeLoader class
 			//ThemeLoader loader = new ThemeLoader (Strings.ApplicationPath (true) + "ColorTheme.config");
