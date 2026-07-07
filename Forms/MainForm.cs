@@ -92,12 +92,12 @@ namespace SummerGUI.Demo
 				m_Editor.Editor.RowManager.GroupParagraphs = false;  // Default mode
 				TabMain.SelectedTab = TabMain.TabPages ["texteditor"];
 				m_Editor.Focus();
-            };			
+            };
 
             IGuiMenuItem mnuOpen = this.MenuPanel.MainMenu.FindItem("Open");
             mnuOpen.Click += (object sender, EventArgs e) => {                
                 OpenFileDialog dlg = new OpenFileDialog();
-                var result = dlg.ShowDialog(this, "Open File", "Text files (*.txt)|*.txt|All files (*.*)|*.*");                
+                var result = dlg.ShowDialog(this, "Open File", "Text files (*.txt)|*.txt|All files (*.*)|*.*");
                 if (result == DialogResults.OK && Strings.FileExists(dlg.FileName))
                 {
                     ShowStatus(String.Format("Loading {0}..", Strings.GetFilename(dlg.FileName)), true);
