@@ -111,7 +111,22 @@ namespace SummerGUI.Demo
 
 					TabMain.SelectedTab = TabMain.TabPages ["texteditor"];
                 }
-            };			
+            };
+
+			IGuiMenuItem mnuOptions = this.MenuPanel.MainMenu.FindItem("Options");
+            mnuOptions.Click += (sender, e) =>
+			{
+				ColorPickerDialog Dlg = new ColorPickerDialog("ColorPicker", this);
+				//Dlg.Color = Color.FromArgb(128, Color.Blue);
+				Dlg.Color = Color.FromArgb(128, Color.BlueViolet);
+				Dlg.ShowDialog(this);
+				if (Dlg.Result == DialogResults.OK)
+				{
+					this.LogInformation($"Color selected: {Dlg.Color}");
+				}
+				Dlg.Dispose();
+				Dlg = null;
+			};
 
             m_Editor.Editor.RowManager.LoadingCompleted += (sender, e) =>
             {
