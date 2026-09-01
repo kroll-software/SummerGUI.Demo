@@ -4,13 +4,13 @@ Welcome to the official demonstration project for the **SummerGUI X-Platform Fra
 ![Screenshot](Screenshots/SummerGUI-Screenshot.png)
 
 ## What is SummerGUI?
-SummerGUI is a high-performance, cross-platform UI framework for .NET 8. It moves away from legacy OpenGL to a modern **Core Profile** architecture using **Vertex Buffer Objects (VBOs)** and professional text shaping via **HarfBuzz**.
+SummerGUI is a high-performance, cross-platform UI framework for .NET 10. It moves away from legacy OpenGL to a modern **Core Profile** architecture using **Vertex Buffer Objects (VBOs)** and professional text shaping via **HarfBuzz**.
 
 ## Why try this Demo?
 
 - **Real-World Examples:** See how to build windows, dialogs, and custom widgets.
 - **True Cross-Platform:** Experience the exact same UI and performance on both Windows and Ubuntu.
-- **Modern Stack:** Explore a codebase that utilizes .NET 8 and OpenTK 4.x to its full potential.
+- **Modern Stack:** Explore a codebase that utilizes .NET 10 and OpenTK 4.x to its full potential.
 
 ## 🛠 Prerequisites & Setup
 Since SummerGUI is built for cross-platform development, this project is optimized for **VS-Code**.

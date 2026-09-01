@@ -130,7 +130,7 @@ namespace SummerGUI.Demo
 
             m_Editor.Editor.RowManager.LoadingCompleted += (sender, e) =>
             {
-                ShowStatus();
+                ShowStatus();				
             };
 
             m_GraphPlotter = this.TabMain.TabPages ["plotter"].AddChild (new PlotterContainer ("graph2d"));
@@ -217,18 +217,18 @@ namespace SummerGUI.Demo
                         m_Editor.Text = TextFile.LoadTextFile(textEditorBook);
 					}).ContinueWith(t => ShowStatus());
 				}
-			};				
+			};
 
 			base.Controller = new DemoController (this);
 
             // Show Diagnostics in StatusBar
-			StartDiagnostics ();
+			StartDiagnostics ();			
 		}
 
 		public override void OnApplicationRunning ()
 		{
 			base.OnApplicationRunning ();
-			Controller.OnApplicationRunning ();
+			Controller.OnApplicationRunning ();			
 		}
 
 		public override void OnLoadSettings ()
