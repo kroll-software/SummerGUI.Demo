@@ -16,6 +16,7 @@ namespace SummerGUI.Demo
 {
 	public class MainForm : ApplicationWindow
 	{						
+		public NewWidgetsSampleContainer m_NewWidgetsSampleContainer;
 		public CommonControlsSampleContainer m_CommonControlsSampleContainer;
 
 		public DataGridEnsemble GridView { get; private set; }
@@ -61,7 +62,8 @@ namespace SummerGUI.Demo
 
 			// ******
 
-			this.TabMain.AdTabPage ("common", "Common Controls", Theme.Colors.White);
+			this.TabMain.AdTabPage ("newwidgets", "New Widgets", Theme.Colors.White, (char)FontAwesomeIcons.fa_paint_brush, 0);
+		this.TabMain.AdTabPage ("common", "Common Controls", Theme.Colors.White);
 			this.TabMain.AdTabPage ("datagrid", "Data Grid");
 			this.TabMain.AdTabPage ("schedule", "Schedule");
 			this.TabMain.AdTabPage ("texteditor", "Editor", Color.Empty, (char)FontAwesomeIcons.fa_edit);
@@ -70,9 +72,12 @@ namespace SummerGUI.Demo
 			this.TabMain.AdTabPage ("sensors", "Sensors");
             this.TabMain.AdTabPage("console", "Console");
 
+            m_NewWidgetsSampleContainer = this.TabMain.TabPages ["newwidgets"].AddChild (new NewWidgetsSampleContainer ());
+            this.TabMain.TabPages ["newwidgets"].ScrollBars = ScrollBars.Vertical;
+            this.TabMain.TabPages ["newwidgets"].AutoScroll = true;
             m_CommonControlsSampleContainer = this.TabMain.TabPages ["common"].AddChild (new CommonControlsSampleContainer ());
-			this.TabMain.TabPages ["common"].ScrollBars = ScrollBars.Vertical;			
-			this.TabMain.TabPages ["common"].AutoScroll = true;			
+            		this.TabMain.TabPages ["common"].ScrollBars = ScrollBars.Vertical;			
+            		this.TabMain.TabPages ["common"].AutoScroll = true;			
 
 			GridView = this.TabMain.TabPages ["datagrid"].AddChild (new DataGridEnsemble ("samplegrid"));
 			GridView.DataGrid.AllowSort = true;

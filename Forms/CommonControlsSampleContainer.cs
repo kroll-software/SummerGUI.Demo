@@ -258,6 +258,5 @@ namespace SummerGUI.Demo
         {
             base.OnLayout(ctx, bounds);
         }
-	}
 }
-
+}
