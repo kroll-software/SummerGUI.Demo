@@ -20,6 +20,8 @@ namespace SummerGUI.Demo
 		HatchStyleComboBox m_HatchStyleComboBox1;
 		TextLabel m_LblDash;
 		DashStyleComboBox m_DashStyleComboBox1;
+		TextLabel m_LblFont;
+		FontComboBox m_FontComboBox1;
 
 		public NewWidgetsSampleContainer()
 			: base("NewWidgetsSampleContainer")
@@ -60,6 +62,13 @@ namespace SummerGUI.Demo
 			m_DashStyleComboBox1 = new DashStyleComboBox("DashStyleComboBox1");
 			m_DashStyleComboBox1.SetSelectedDashStyle(DashStyle.DashDot);
 			this.AddChild(m_DashStyleComboBox1, tableRow++, tableColumn);
+
+			m_LblFont = new TextLabel("lblFont", "Font");
+			this.AddChild(m_LblFont, tableRow++, tableColumn);
+			m_FontComboBox1 = new FontComboBox("FontComboBox1");
+			// Demo: pick a non-default font to prove the on-demand preview path.
+			m_FontComboBox1.SetSelectedFont("Fonts/Lato-Regular.ttf".FixedExpandedPath());
+			this.AddChild(m_FontComboBox1, tableRow++, tableColumn);
 		}
 	}
 }
