@@ -22,6 +22,14 @@ namespace SummerGUI.Demo
 		DashStyleComboBox m_DashStyleComboBox1;
 		TextLabel m_LblFont;
 		FontComboBox m_FontComboBox1;
+		TextLabel m_LblMask;
+		MaskedTextBox m_MaskedTextBox1;
+		TextLabel m_LblMaskOpt;
+		MaskedTextBox m_MaskedTextBox2;
+		TextLabel m_LblDateTime;
+		DateTimePicker m_DateTimePicker1;
+		TextLabel m_LblTime;
+		TimePicker m_TimePicker1;
 
 		public NewWidgetsSampleContainer()
 			: base("NewWidgetsSampleContainer")
@@ -69,6 +77,34 @@ namespace SummerGUI.Demo
 			// Demo: pick a non-default font to prove the on-demand preview path.
 			m_FontComboBox1.SetSelectedFont("Fonts/Lato-Regular.ttf".FixedExpandedPath());
 			this.AddChild(m_FontComboBox1, tableRow++, tableColumn);
-		}
+
+			m_LblMask = new TextLabel("lblMask", "Mask (Phone / Date)");
+			this.AddChild(m_LblMask, tableRow++, tableColumn);
+			// A classic phone mask: '(ddd) ddd-dddd'. Literals are pre-filled;
+			// '0' = required digit.
+			m_MaskedTextBox1 = new MaskedTextBox("MaskedTextBox1", "(000) 000-0000");
+			this.AddChild(m_MaskedTextBox1, tableRow++, tableColumn);
+
+			m_LblMaskOpt = new TextLabel("lblMaskOpt", "Mask (Optional, ddmmyy)");
+			this.AddChild(m_LblMaskOpt, tableRow++, tableColumn);
+			// A date mask with optional day and month: '99/99/00'.
+			// '9' = optional digit, '*' = any char is accepted.
+			m_MaskedTextBox2 = new MaskedTextBox("MaskedTextBox2", "99/99/00");
+			this.AddChild(m_MaskedTextBox2, tableRow++, tableColumn);
+
+			m_LblDateTime = new TextLabel("lblDateTime", "Date (DateTimePicker)");
+			this.AddChild(m_LblDateTime, tableRow++, tableColumn);
+			// Masked date box + calendar icon button that opens the MonthCalendar overlay.
+			m_DateTimePicker1 = new DateTimePicker("DateTimePicker1");
+			m_DateTimePicker1.Value = DateTime.Today;
+			this.AddChild(m_DateTimePicker1, tableRow++, tableColumn);
+
+			m_LblTime = new TextLabel("lblTime", "Time (TimePicker)");
+			this.AddChild(m_LblTime, tableRow++, tableColumn);
+			// Masked time box + up/down spin buttons for hour and minute.
+			m_TimePicker1 = new TimePicker("TimePicker1");
+			m_TimePicker1.Value = DateTime.Today.AddHours(14).AddMinutes(30);
+			this.AddChild(m_TimePicker1, tableRow++, tableColumn);
+			}
 	}
 }

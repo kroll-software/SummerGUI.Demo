@@ -42,7 +42,7 @@ namespace SummerGUI.Demo
 		/// <summary>
 		/// Load all your widgets here,
 		/// </summary>		
-		public MainForm () : base("SummerGUI Demo", 800, 600)
+		public MainForm () : base("SummerGUI Demo", 820, 760)
 		{			
 			this.Title = "Summer GUI Demo - A lightweight X-Platform GUI Framework in C#";			
 
