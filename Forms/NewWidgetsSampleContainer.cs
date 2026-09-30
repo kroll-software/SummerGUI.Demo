@@ -14,6 +14,9 @@ namespace SummerGUI.Demo
 	public class NewWidgetsSampleContainer : TableLayoutContainer
 	{
 		CaptionLabel m_Label1;
+		TreeView m_TreeView1;
+		TextLabel m_LblTree;
+		TextLabel m_TreeStatus;
 		TextLabel m_LblLvLI;
 		ListView m_ListViewLI;
 		TextLabel m_LvLIStatus;
@@ -56,6 +59,93 @@ namespace SummerGUI.Demo
 			m_Label1.Dock = Docking.Fill;
 			m_Label1.Text = "New Widgets".ToUpper();
 			this.AddChild(m_Label1, tableRow++, tableColumn);
+
+			// =================================================================
+			// TreeView (ZUERST — neue WinForms-Parität-Widget mit Ästen,
+			// FontAwesome +/−-Icons, gestrichelten Treelines, V+H-Scrolling,
+			// Keyboard-Navigation und CollapseAll/ExpandAll).
+			// =================================================================
+			m_LblTree = new TextLabel("lblTree", "TreeView (expand / collapse, +/−, dashed treelines)");
+			this.AddChild(m_LblTree, tableRow++, tableColumn);
+
+			m_TreeView1 = new TreeView("TreeView1");
+			m_TreeView1.MinSize = new SizeF(420, 260);
+			m_TreeView1.MaxSize = new SizeF(420, 260);
+
+			// Sample tree — mimics a small project tree.
+			char chFile = (char)FontAwesomeIcons.fa_file_o;
+			char chFolder = (char)FontAwesomeIcons.fa_folder;
+
+			var root1 = m_TreeView1.Add("SummerGUI", tag: "root", glyph: (char)FontAwesomeIcons.fa_dot_circle_o, isFolder: true);
+			var src = root1.AddChild(new TreeViewItem("src", glyph: chFolder, isFolder: true));
+
+			var drawing = src.AddChild(new TreeViewItem("drawing", glyph: chFolder, isFolder: true));
+			drawing.AddChild(new TreeViewItem("textRendering.cs", glyph: chFile));
+			drawing.AddChild(new TreeViewItem("pen.cs", glyph: chFile));
+			drawing.AddChild(new TreeViewItem("brush.cs", glyph: chFile));
+			drawing.AddChild(new TreeViewItem("dashEngine.cs", glyph: chFile));
+
+			var forms = src.AddChild(new TreeViewItem("forms", glyph: chFolder, isFolder: true));
+			forms.AddChild(new TreeViewItem("listView.cs", glyph: chFile));
+			forms.AddChild(new TreeViewItem("comboBox.cs", glyph: chFile));
+			var tree = forms.AddChild(new TreeViewItem("treeView.cs", glyph: chFile));
+			tree.AddChild(new TreeViewItem("treeNode.cs", glyph: chFile));
+			tree.AddChild(new TreeViewItem("treeViewWidgetStyles.cs", glyph: chFile));
+
+			var tests = root1.AddChild(new TreeViewItem("tests", glyph: chFolder, isFolder: true));
+			tests.AddChild(new TreeViewItem("drawingTests.cs", glyph: chFile));
+			tests.AddChild(new TreeViewItem("formsTests.cs", glyph: chFile));
+			tests.AddChild(new TreeViewItem("widgetStyleTests.cs", glyph: chFile));
+
+			var docs = root1.AddChild(new TreeViewItem("docs", glyph: chFolder, isFolder: true));
+			docs.AddChild(new TreeViewItem("readme.md", glyph: chFile));
+			docs.AddChild(new TreeViewItem("contributing.md", glyph: chFile));
+			docs.AddChild(new TreeViewItem("changes.md", glyph: chFile));
+
+			// Start expanded (default) so the user sees the full tree immediately.
+			m_TreeView1.ExpandAll ();
+
+			this.AddChild(m_TreeView1, tableRow++, tableColumn);
+
+			m_TreeStatus = new TextLabel("treeStatus", "Selected: (none)");
+			this.AddChild(m_TreeStatus, tableRow++, tableColumn);
+
+			m_TreeView1.SelectionChanged += (s, e) =>
+			{
+				var sel = m_TreeView1.SelectedItem;
+				m_TreeStatus.Text = sel != null
+					? ("Selected: " + sel.Text + (sel.HasChildren ? " [depth " + sel.Depth + "]" : ""))
+					: "Selected: (none)";
+			};
+
+			// Doppelklick oder Enter → InfoMsgBox (wie bei der ListView ItemActivated).
+			m_TreeView1.ItemDoubleClicked += (s, e) =>
+			{
+				var sel = e.Node ?? m_TreeView1.SelectedItem;
+				string msg = (sel != null)
+					? "TreeView-Item aktiviert:\n" + sel.Text
+					: "(kein Item gewählt)";
+				m_TreeView1.ParentWindow?.ShowInfo (msg);
+			};
+
+			m_TreeView1.NodeExpandStateChanged += (s, e) =>
+			{
+				// (Just for observation; no popup so as not to disrupt interaction.)
+			};
+
+			// Zwei Test-Buttons für ExpandAll / CollapseAll.
+			// WICHTIG: Standard-Button feuert bei normalem Klick das "Click"-Event (via
+			// OnClick/InvokeMouseUp), NICHT "Fire". "Fire" wird nur bei IsAutofire=true
+			// (Spinner-Buttons) ausgelöst. Deshalb Click verwenden.
+			var btnExpand = new Button("btnTvExpand", "Expand All");
+			btnExpand.MinSize = new SizeF(160, 28);
+			btnExpand.Click += (s, e) => m_TreeView1.ExpandAll ();
+			this.AddChild(btnExpand, tableRow++, tableColumn);
+
+			var btnCollapse = new Button("btnTvCollapse", "Collapse All");
+			btnCollapse.MinSize = new SizeF(160, 28);
+			btnCollapse.Click += (s, e) => m_TreeView1.CollapseAll ();
+			this.AddChild(btnCollapse, tableRow++, tableColumn);
 
 			// =================================================================
 			// ListViewen ZUERST (damit beim Testen nicht gescrollt werden muss).
