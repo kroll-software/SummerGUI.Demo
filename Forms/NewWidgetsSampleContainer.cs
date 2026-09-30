@@ -9,11 +9,17 @@ namespace SummerGUI.Demo
 	/// Sample container showcasing the newest widgets of the SummerGUI family.
 	/// Mirrors the structure of <see cref="CommonControlsSampleContainer"/>:
 	/// a TableLayout with a caption label plus the widgets, here currently
-	/// just the new <see cref="ColorComboBox"/>.
+	/// the new <see cref="ColorComboBox"/> and the new <see cref="ListView"/>.
 	/// </summary>
 	public class NewWidgetsSampleContainer : TableLayoutContainer
 	{
 		CaptionLabel m_Label1;
+		TextLabel m_LblLvLI;
+		ListView m_ListViewLI;
+		TextLabel m_LvLIStatus;
+		TextLabel m_LblListView;
+		ListView m_ListView1;
+		TextLabel m_ListViewStatus;
 		TextLabel m_LblColor;
 		ColorComboBox m_ColorComboBox1;
 		TextLabel m_LblHatch;
@@ -51,6 +57,127 @@ namespace SummerGUI.Demo
 			m_Label1.Text = "New Widgets".ToUpper();
 			this.AddChild(m_Label1, tableRow++, tableColumn);
 
+			// =================================================================
+			// ListViewen ZUERST (damit beim Testen nicht gescrollt werden muss).
+			// =================================================================
+
+			// ---------------------------------------------
+			// ListView – LARGE ICON (View.LargeIcon):
+			// große Icons, 2-zeiliger Text, Tooltips bei gekürztem Text,
+			// Cursor-Tasten-Navigation (↑↓←→), aktives Item hervorgehoben.
+			// ---------------------------------------------
+			m_LblLvLI = new TextLabel("lblLvLI", "ListView – LargeIcon");
+			this.AddChild(m_LblLvLI, tableRow++, tableColumn);
+
+			m_ListViewLI = new ListView("ListViewLI");
+			m_ListViewLI.MinSize = new SizeF(380, 300);
+			m_ListViewLI.MaxSize = new SizeF(380, 300);
+			m_ListViewLI.View = SummerGUI.ListViewView.LargeIcon;
+			m_ListViewLI.LargeIconSize = 48f;
+
+			// Items mit (teils langen) Namen → Tooltip bei gekürztem 2-zeiligen Text.
+			string[] namesLI = {
+				"Readme", "Logo", "Audio Track", "Report Q2 2026",
+				"Backup", "Projects", "Screenshot 2026", "Config",
+				"License", "Notes", "Q22026QuarterlyFinancialReportSummary", "Archive"
+			};
+			char[] iconsLI = {
+				(char)FontAwesomeIcons.fa_file_text_o,
+				(char)FontAwesomeIcons.fa_file_image_o,
+				(char)FontAwesomeIcons.fa_file,
+				(char)FontAwesomeIcons.fa_file_excel_o,
+				(char)FontAwesomeIcons.fa_file_archive_o,
+				(char)FontAwesomeIcons.fa_list,
+				(char)FontAwesomeIcons.fa_camera,
+				(char)FontAwesomeIcons.fa_cog,
+				(char)FontAwesomeIcons.fa_file_o,
+				(char)FontAwesomeIcons.fa_file_o,
+				(char)FontAwesomeIcons.fa_image,
+				(char)FontAwesomeIcons.fa_archive
+			};
+			for (int i = 0; i < namesLI.Length; i++)
+				m_ListViewLI.Items.AddLast (new ListViewItem (namesLI [i], iconsLI [i], "", ""));
+
+			this.AddChild(m_ListViewLI, tableRow++, tableColumn);
+
+			m_LvLIStatus = new TextLabel("lvLIStatus", "LargeIcon: -");
+			this.AddChild(m_LvLIStatus, tableRow++, tableColumn);
+			m_ListViewLI.SelectionChanged += (s, e) =>
+			{
+				var sel = m_ListViewLI.SelectedItem;
+				m_LvLIStatus.Text = sel != null
+					? "LargeIcon: [" + m_ListViewLI.SelectedIndex + "] " + sel.Text
+					: "LargeIcon: -";
+			};
+			m_ListViewLI.ItemActivated += (s, e) =>
+			{
+				var sel = m_ListViewLI.SelectedItem;
+				string msg = (sel != null)
+					? "Item [" + m_ListViewLI.SelectedIndex + "] aktiviert:\n" + sel.Text
+					: "(kein Item gewählt)";
+				m_ListViewLI.ParentWindow?.ShowInfo(msg);
+			};
+			m_ListViewLI.SelectedIndex = 2;
+
+			// ---------------------------------------------
+			// ListView – Details (Spalten, Sub-Items, Scrollbars).
+			// ---------------------------------------------
+			m_LblListView = new TextLabel("lblListView", "ListView (Details)");
+			this.AddChild(m_LblListView, tableRow++, tableColumn);
+
+			m_ListView1 = new ListView("ListView1");
+			m_ListView1.MinSize = new SizeF(380, 220);
+			m_ListView1.MaxSize = new SizeF(380, 220);
+
+			// Columns – breiter als die List-Breite (380), damit eine horizontale Scrollbar entsteht
+			m_ListView1.Columns.Add(new SummerGUI.ListViewColumn("Name", 200f));
+			m_ListView1.Columns.Add(new SummerGUI.ListViewColumn("Type", 200f));
+			m_ListView1.Columns.Add(new SummerGUI.ListViewColumn("Size", 120f));
+
+			string[] types = { "Text file", "Image", "Audio", "Spreadsheet", "Archive", "Folder" };
+			char[]   icons = {
+				(char)FontAwesomeIcons.fa_file_text_o,
+				(char)FontAwesomeIcons.fa_file_image_o,
+				(char)FontAwesomeIcons.fa_file,
+				(char)FontAwesomeIcons.fa_file_excel_o,
+				(char)FontAwesomeIcons.fa_file_archive_o,
+				(char)FontAwesomeIcons.fa_list
+			};
+			string[] names = { "Readme", "Logo", "Track", "Report", "Backup", "Projects" };
+
+			for (int i = 1; i <= 40; i++)
+			{
+				int j = (i - 1) % icons.Length;
+				var it = new ListViewItem(names[j] + " " + i.ToString(),
+					icons[j],
+					types[j], (i * 3).ToString("N0") + " KB");
+				m_ListView1.Items.AddLast(it);
+			}
+
+			m_ListView1.SelectedIndex = 2;
+			this.AddChild(m_ListView1, tableRow++, tableColumn);
+
+			m_ListViewStatus = new TextLabel("lvStatus", "Selected: -");
+			this.AddChild(m_ListViewStatus, tableRow++, tableColumn);
+			m_ListView1.SelectionChanged += (s, e) =>
+			{
+				var sel = m_ListView1.SelectedItem;
+				m_ListViewStatus.Text = sel != null
+					? "Selected: [" + m_ListView1.SelectedIndex + "] " + m_ListView1.GetRowText(m_ListView1.SelectedIndex)
+					: "Selected: -";
+			};
+			m_ListView1.ItemActivated += (s, e) =>
+			{
+				var sel = m_ListView1.SelectedItem;
+				string msg = (sel != null)
+					? "Zeile [" + m_ListView1.SelectedIndex + "] aktiviert:\n" + m_ListView1.GetRowText(m_ListView1.SelectedIndex)
+					: "(keine Zeile gewählt)";
+				m_ListView1.ParentWindow?.ShowInfo(msg);
+			};
+
+			// =================================================================
+			// Übrige Widgets (unter den ListViewen).
+			// =================================================================
 			m_LblColor = new TextLabel("lblColor", "Color");
 			this.AddChild(m_LblColor, tableRow++, tableColumn);
 			m_ColorComboBox1 = new ColorComboBox("ColorComboBox1");
@@ -105,6 +232,6 @@ namespace SummerGUI.Demo
 			m_TimePicker1 = new TimePicker("TimePicker1");
 			m_TimePicker1.Value = DateTime.Today.AddHours(14).AddMinutes(30);
 			this.AddChild(m_TimePicker1, tableRow++, tableColumn);
-			}
+		}
 	}
 }
