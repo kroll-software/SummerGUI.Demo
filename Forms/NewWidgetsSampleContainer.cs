@@ -35,6 +35,8 @@ namespace SummerGUI.Demo
 		MaskedTextBox m_MaskedTextBox1;
 		TextLabel m_LblMaskOpt;
 		MaskedTextBox m_MaskedTextBox2;
+		TextLabel m_LblBlockEdit;
+		SummerGUI.BlockEditTextBox m_BlockEdit1;
 		TextLabel m_LblDateTime;
 		DateTimePicker m_DateTimePicker1;
 		TextLabel m_LblTime;
@@ -308,6 +310,13 @@ namespace SummerGUI.Demo
 			// '9' = optional digit, '*' = any char is accepted.
 			m_MaskedTextBox2 = new MaskedTextBox("MaskedTextBox2", "99/99/00");
 			this.AddChild(m_MaskedTextBox2, tableRow++, tableColumn);
+
+			m_LblBlockEdit = new TextLabel("lblBlockEdit", "BlockEditTextBox (Uhr 00:00)");
+			this.AddChild(m_LblBlockEdit, tableRow++, tableColumn);
+			var b1 = new SummerGUI.BlockEditTextBox.Block { Len = 2, Max = 59, Value = 8 };
+			var b2 = new SummerGUI.BlockEditTextBox.Block { Len = 2, Max = 59, Value = 45 };
+			m_BlockEdit1 = new SummerGUI.BlockEditTextBox("BlockEditTextBox1", new SummerGUI.BlockEditTextBox.Block[] { b1, b2 }, ':');
+			this.AddChild(m_BlockEdit1, tableRow++, tableColumn);
 
 			m_LblDateTime = new TextLabel("lblDateTime", "Date (DateTimePicker)");
 			this.AddChild(m_LblDateTime, tableRow++, tableColumn);

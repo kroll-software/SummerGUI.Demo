@@ -212,15 +212,25 @@ namespace SummerGUI.Demo
 			GridView.DataGrid.DataLoaded += delegate {				
 				ShowStatus();
 				bool LoadBook = true;
-				if (LoadBook) {										
-					string textEditorBook = (Strings.ApplicationPath (true) 
-						// + "SampleData/Alice's Adventures in Wonderland.txt").FixPathForPlatform();
-						+ "SampleData/Ulysses.txt").FixPathForPlatform();					 						
-					ShowStatus (String.Format("Loading {0} into editor..", Strings.GetFilename(textEditorBook)), false);
+				if (LoadBook) {												
+					// TEST: emoji test text loaded directly (no file dialog needed).
+					// BMP + astral emoji in one small document.
+					const string emojiTest =
+						"A 😀 smile\n" +
+						"B 🚀 rocket\n" +
+						"C 👍 thumb\n" +
+						"D 🎉 party\n" +
+						"E 🍎 apple\n" +
+						"F 🐶 dog\n" +
+						"G 😊 grin\n" +
+						"H ☕ coffee (BMP emoji)\n" +
+						"I 🌈 rainbow\n" +
+						"J 🐱 cat\n";
+					ShowStatus ("Loading emoji test text into editor..", false);
 					System.Threading.Tasks.Task.Factory.StartNew(() => {
-                        m_Editor.Editor.RowManager.GroupParagraphs = true;  // just for the sample books
-                        m_Editor.Text = TextFile.LoadTextFile(textEditorBook);
-					}).ContinueWith(t => ShowStatus());
+                        m_Editor.Editor.RowManager.GroupParagraphs = false;  // test mode (was: true, just for the sample books)
+                        m_Editor.Text = emojiTest;
+						}).ContinueWith(t => ShowStatus());
 				}
 			};
 

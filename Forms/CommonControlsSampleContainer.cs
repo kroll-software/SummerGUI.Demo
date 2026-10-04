@@ -64,6 +64,25 @@ namespace SummerGUI.Demo
 			this.AddChild (test, tableRow++, tableColumn);
 			***/
 
+			// === EMOJI-TEST (CBDT-17-Fallback-Pipeline) ===
+			CaptionLabel emojiHeader = new CaptionLabel ("emojiHeader");
+			emojiHeader.Style.BackColorBrush.Color = Theme.Colors.Base2;
+			emojiHeader.Dock = Docking.Fill;
+			emojiHeader.Text = "EMOJI-FALLBACK (AUTO-LADED)".ToUpper();
+			this.AddChild (emojiHeader, tableRow++, tableColumn);
+
+			// Gemischt: reguläre Zeichen + Emoji in derselben Zeichenfolge (Astral- + BMP-Plane)
+			TextLabel emojiLabel = new TextLabel ("emojiLabel", "Emoji-Test: Hello 😊 World ❤ 👍 🚀 ☀ 🎉 💩 🙊");
+			this.AddChild (emojiLabel, tableRow++, tableColumn);
+
+			// Nur Emoji, größerer Abstand zum Nachbarn
+			TextLabel emojiLabel2 = new TextLabel ("emojiLabel2", "🧊🪁🏝️🔆🖖");
+			this.AddChild (emojiLabel2, tableRow++, tableColumn);
+
+			// Unicode-Codepoint-Angabe, um den Fallback zu testen (U+1F600 = 😊)
+			TextLabel emojiLabel3 = new TextLabel ("emojiLabel3", "Codepoints: U+1F600 U+00A9 U+1F950");
+			this.AddChild (emojiLabel3, tableRow++, tableColumn);
+
 			m_Label1 = new CaptionLabel ("label1");
 			//m_Label1.Styles.GetStyle (WidgetStates.Default).BackColorBrush.Color = SolarizedColors.Base2;
 			m_Label1.Style.BackColorBrush.Color = Theme.Colors.Base2;
@@ -71,7 +90,7 @@ namespace SummerGUI.Demo
 			m_Label1.Text = "Check Boxes".ToUpper();
 			this.AddChild (m_Label1, tableRow++, tableColumn);
 
-			m_CheckBox1 = new CheckBox ("checkbox1", "CheckBox 1");
+			m_CheckBox1 = new CheckBox ("checkbox1", "⚡ CheckBox 1");
 			this.AddChild (m_CheckBox1, tableRow++, tableColumn);
 
 			m_CheckBox3 = new CheckBox ("checkbox3", "CheckBox 3 (disabled)");
@@ -88,7 +107,7 @@ namespace SummerGUI.Demo
 			m_Label2.Text = "Radio Buttons".ToUpper();
 			this.AddChild (m_Label2, tableRow++, tableColumn);
 
-			m_RadioButton1 = new RadioButton ("radiobutton1", "RadioButton 1");
+			m_RadioButton1 = new RadioButton ("radiobutton1", "📅 RadioButton 1");
 			m_RadioButton1.Checked = true;
 			this.AddChild (m_RadioButton1, tableRow++, tableColumn);
 
@@ -140,7 +159,7 @@ namespace SummerGUI.Demo
 			m_CircleSlider2.Tooltip = "Drag up and down\nto change the value.";
 			m_CircleSliderSubContainer.AddChild (m_CircleSlider2, 0, 1);
 
-			this.AddChild(m_CircleSliderSubContainer, tableRow++, tableColumn, 2, 1);			
+			this.AddChild(m_CircleSliderSubContainer, tableRow++, tableColumn);			
 
 
 			// >>> New Column >>>
@@ -148,7 +167,7 @@ namespace SummerGUI.Demo
 			tableRow = 0;
 			tableColumn = 1;
 
-			cmdDefaultButton = new Button ("cmdDefaultButton", "Default Button", ColorContexts.Default);
+			cmdDefaultButton = new Button ("cmdDefaultButton", "🎉 Default Button", ColorContexts.Default);
 			cmdDefaultButton.Click += delegate {
 				ParentWindow.ShowInfo("You pressed the default button. Great.");	
 			};				
@@ -184,7 +203,7 @@ namespace SummerGUI.Demo
 			this.AddChild (cmdShowQuestion, tableRow++, tableColumn);
 
 			m_TextBox1 = new TextBox ("TextBox1");			
-			m_TextBox1.Text = "Abcd Efg Hijk";
+			m_TextBox1.Text = "⚡ Test";
 			this.AddChild (m_TextBox1, tableRow++, tableColumn);			
 
 			m_ShowPasswordChar = new CheckBox ("ShowPasswordChar", "Password visible");
@@ -204,7 +223,7 @@ namespace SummerGUI.Demo
 			this.AddChild (m_ButtonTextBox1, tableRow++, tableColumn);
 
 			m_ComboListBox1 = new ComboListBox ("ComboListBox1");
-			m_ComboListBox1.Items.Add ("Apple", 1);
+			m_ComboListBox1.Items.Add ("🍎 Apple", 1);
 			m_ComboListBox1.Items.Add ("Orange", 2);
 			m_ComboListBox1.Items.Add ("Banana", 3);
 			m_ComboListBox1.Items.Add ("Cherry", 4);
@@ -213,7 +232,7 @@ namespace SummerGUI.Demo
 			this.AddChild (m_ComboListBox1, tableRow++, tableColumn);
 
 			m_ComboBox1 = new ComboBox ("ComboBox1");
-			m_ComboBox1.Items.Add ("Apple", 1);
+			m_ComboBox1.Items.Add ("🍎 Apple", 1);
 			m_ComboBox1.Items.Add ("Orange", 2);
 			m_ComboBox1.Items.Add ("Banana", 3);
 			m_ComboBox1.Items.Add ("Cherry", 4);
