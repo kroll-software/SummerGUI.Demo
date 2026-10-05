@@ -6,8 +6,6 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Globalization;
-using OpenTK.Windowing.Desktop;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using KS.Foundation;
 using SummerGUI;
 
@@ -49,7 +47,7 @@ namespace SummerGUI.Demo
 					Directory.CreateDirectory(path);
 				}
 				catch (Exception ex)
-				{					
+				{				
 					ex.LogError ();
 					StartupExceptions.Enqueue (ex);
 					return false;
@@ -82,7 +80,7 @@ namespace SummerGUI.Demo
 				path = Strings.ApplicationPath(true);
 			}
 			ApplicationRoot = path.BackSlash(true);
-		}			
+		}		
 
 		static void InitConfiguration(string appName)
 		{
@@ -106,34 +104,13 @@ namespace SummerGUI.Demo
 			// Setup global exception handlers
 			AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
 			AppDomain.CurrentDomain.UnhandledException += ExceptionUnhandled;
-			AppDomain.CurrentDomain.FirstChanceException += AppDomain_CurrentDomain_FirstChanceException;			
+			AppDomain.CurrentDomain.FirstChanceException += AppDomain_CurrentDomain_FirstChanceException;	
 
 			InitApplication ();
-			
-			GLFWProvider.SetErrorCallback((errorCode, description) =>
-			{
-				// Wir prüfen primär auf die Beschreibung oder den spezifischen Feature-Fehler
-				if (description != null && description.Contains("opacity", StringComparison.OrdinalIgnoreCase))
-				{
-					// Safe-Guard: Unter Wayland einfach ignorieren und weiterlaufen lassen
-					System.Diagnostics.Debug.WriteLine($"[SummerGUI Wayland Note] {description}");
-					return; 
-				}
 
-				// Alternativ-Check über den Namen des ErrorCodes, falls die Beschreibung variiert
-				if (errorCode.ToString().Contains("FeatureUnavailable"))
-				{
-					return;
-				}
-
-				if (errorCode.ToString().Contains("PlatformUnavailable"))
-				{
-					return;
-				}				
-
-				// Alles andere bleibt ein harter Crash für die Entwicklung
-				throw new GLFWException($"GLFW Error {errorCode}: {description}");
-			});			
+			// GLFW-Fehler-Handling: wird zentral von SummerGUI.GlfwErrorGuard installiert
+			// (erster SummerGUIWindow-Konstruktor). Unter Wayland werden Feature-/PlatformUnavailable-
+			// und Opacity/Position-Fehler bewusst toleriert; alle anderen bleiben hart.
 
             // testing the ThemeLoader class
 			//ThemeLoader loader = new ThemeLoader (Strings.ApplicationPath (true) + "ColorTheme.config");

@@ -1,4 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SummerGUI\SummerGUI.targets"
+          Condition="Exists('..\SummerGUI\SummerGUI.targets')" /><!-- SummerGUI: GLFW-Wayland-Fork -->
+
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
